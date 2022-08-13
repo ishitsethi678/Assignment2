@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input, h3 {
+            font:15px 'Segoe UI';
+        }
+        table, th, td {
+            border: solid 1px #ddd;
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+        }
+        th {
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+	<h3>
+    	Click the button to create a dynamic table using data extracted from a JSON array.
+    </h3>
+    <input type='button' onclick='tableFromJson()' 
+    	value='Create Table from JSON data' />
+        
+    <p id='showData'></p>
+    
+    <p id='msg'></p>
+</body>
+
+<script>
+	
+
+    function tableFromJson() {
+		// the json data. 
+        var myMachine = [
+            {'machine_name': 'Auto Winding Machine', 'machine_id': 'machine001',
+'current': '0', 'voltage': '0', 'power_factor': '0', 'active_power':'0.0', 'apparent_power':'0.0',
+'reactive_power':'0.0', 'daily_energy':'0', 'monthly_energy':'0', 'yearly_energy':'0', 'idle_daily':'0',
+'idle_monthly':'0', 'idle_yearly':'0'
+},
+{
+'machine_name': 'Boiler Machine', 'machine_id': 'machine004',
+'current': '0', 'voltage': '0', 'power_factor': '0', 'active_power': '0.0', 'apparent_power': '0.0', 'reactive_power':
+'0.0', 'daily_energy': '0', 'monthly_energy': '0', 'yearly_energy': '0', 'idle_daily': '0', 'idle_monthly': '0',
+'idle_yearly': '0'
+}
+        ]
+
+       
+        var col = [];
+        for (var i = 0; i < myMachine.length; i++) {
+            for (var key in myMachine[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+       
+        var table = document.createElement("table");
+
+       
+        var tr = table.insertRow(-1);                   
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");     
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        
+        for (var i = 0; i < myMachine.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = myMachine[i][col[j]];
+            }
+        }
+
+        
+        var divShowData = document.getElementById('showData');
+        divShowData.innerHTML = "";
+        divShowData.appendChild(table);
+        
+        document.getElementById('msg').innerHTML = ' ';
+    }
+    
+   
+</script>
+</html>
